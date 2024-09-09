@@ -145,6 +145,7 @@
             <a href="index.html"><h1 style="color: White;">𝑾𝒊𝒔𝒅𝒐𝒎 𝑺𝒆𝒂𝒓𝒄𝒉 𝑬𝒏𝒈𝒊𝒏𝒆</h1></a>
         </header>
         <main>
+            <img src="icon.png" alt="Wisdom Search Engine" style="display: block; margin: 0 auto 20px auto; width: 200px; height: 200px; border-radius: 50%;">
             <form id="search-form">
                 <input type="text" id="search-input" placeholder="Search..." style="margin-right: 10px">
                 <button type="submit">Search</button>
@@ -232,8 +233,8 @@
 
                             const gutenbergResults = gutenbergData.results.map(result => ({
                                 title: result.title || 'No Title',
-                                description: result.formats['text/plain; charset=utf-8'] || 'No Description',
-                                source: result.formats['text/plain; charset=utf-8'],
+                                description: result.formats[Object.keys(result.formats)[0]] || 'No Description',
+                                source: Object.values(result.formats)[0],
                             }));
             
                             const allResults = [...wikipediaResults, ...wikipediaResults2, ...archiveResults, ...archiveResults2, ...gutenbergResults];
