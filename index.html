@@ -100,6 +100,7 @@
             word-wrap: break-word;
             overflow-wrap: break-word;
             margin-bottom: 20px; /* Space between results */
+            width: 100%; /* Ensure result boxes fit the screen */
         }
     
         .result h2 {
@@ -126,9 +127,9 @@
         .results.active {
             display: block;
         }
-
+    
         .result img {
-            width: 100%;
+            width: 100px; /* Set width to 100px */
             height: auto;
         }
     
@@ -174,87 +175,87 @@
         /* Media Queries for Mobile Devices */
         @media (max-width: 768px) {
             header {
-            padding: 20px;
-            font-size: 20px;
+                padding: 20px;
+                font-size: 20px;
             }
         
             h1 {
-            font-size: 28px;
+                font-size: 28px;
             }
         
             main {
-            padding: 20px;
+                padding: 20px;
             }
         
             input[type="text"] {
-            width: 100%;
-            margin-bottom: 10px; /* Add margin for spacing */
+                width: 100%;
+                margin-bottom: 10px; /* Add margin for spacing */
             }
         
             button[type="submit"] {
-            width: 100%;
-            padding: 12px;
+                width: 100%;
+                padding: 12px;
             }
         
             .result h2 {
-            font-size: 20px;
+                font-size: 20px;
             }
-
+    
             .result {
-            padding: 15px;
-            font-size: 14px;
+                padding: 15px;
+                font-size: 14px;
             }
-
-            .result img {
-            width: 100%;
-            height: auto;
-            }
-        
-            footer {
-            padding: 20px;
-            font-size: 16px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            header {
-            padding: 15px;
-            font-size: 18px;
-            }
-        
-            h1 {
-            font-size: 24px;
-            }
-        
-            main {
-            padding: 15px;
-            }
-        
-            input[type="text"] {
-            font-size: 16px;
-            }
-        
-            button[type="submit"] {
-            font-size: 16px;
-            }
-        
-            .result h2 {
-            font-size: 18px;
-            }
-
-            .result {
-            padding: 10px;
-            font-size: 12px;
-            }
-
+    
             .result img {
                 width: 100%;
                 height: auto;
             }
         
             footer {
-            padding: 15px;
-            font-size: 14px;
+                padding: 20px;
+                font-size: 16px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            header {
+                padding: 15px;
+                font-size: 18px;
+            }
+        
+            h1 {
+                font-size: 24px;
+            }
+        
+            main {
+                padding: 15px;
+            }
+        
+            input[type="text"] {
+                font-size: 16px;
+            }
+        
+            button[type="submit"] {
+                font-size: 16px;
+            }
+        
+            .result h2 {
+                font-size: 18px;
+            }
+    
+            .result {
+                padding: 10px;
+                font-size: 12px;
+            }
+    
+            .result img {
+                width: 100%;
+                height: auto;
+            }
+        
+            footer {
+                padding: 15px;
+                font-size: 14px;
             }
         }
     </style>
