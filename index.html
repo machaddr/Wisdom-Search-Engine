@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Wisdom Search Engine</title>
     <meta name="description" content="Your Way to Knowledge">
-    <meta name="keywords" content="search engine, wikipedia, archive">
+    <meta name="keywords" content="psychedelics, search engine, wikipedia, archive.org">
     <meta name="author" content="André Machado">
     <meta name="robots" content="index, follow">
     <meta name="revisit-after" content="1 day">
@@ -13,6 +13,7 @@
     <meta name="distribution" content="global">
     <meta name="rating" content="general">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;700&display=swap" rel="stylesheet">
     <link rel="icon" href="icon.png" type="image/png">
     <style>
         body, html {
@@ -20,130 +21,148 @@
             padding: 0;
             height: 100%;
             width: 100%;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
         }
-        
+    
         .container {
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-rows: auto 1fr auto;
             min-height: 100vh;
             box-sizing: border-box;
         }
     
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
-        }
-        
         header {
-            background-color: #333;
+            background-color: #000000;
             color: #fff;
-            padding: 20px;
+            padding: 30px;
             text-align: center;
+            font-size: 24px;
+            font-weight: bold;
         }
-        
+    
         h1 {
-            font-size: 25px;
+            font-size: 32px;
             margin: 0;
+            font-weight: 300;
         }
-        
+    
         main {
-            padding: 20px;
+            padding: 40px;
             flex-grow: 1;
             overflow-y: auto;
         }
-        
+    
         form {
             display: flex;
             margin-bottom: 20px;
+            justify-content: center;
         }
-        
+    
         input[type="text"] {
-            flex: 1;
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            width: 60%;
+            padding: 12px;
+            font-size: 18px;
+            border: 1px solid #ced4da;
+            border-radius: 25px;
+            margin-right: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        
+    
         button[type="submit"] {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #4CAF50;
+            padding: 12px 24px;
+            font-size: 18px;
+            background: linear-gradient(45deg, #007bff, #0056b3);
             color: #fff;
             border: none;
-            border-radius: 4px;
+            border-radius: 25px;
             cursor: pointer;
+            transition: background 0.3s;
         }
-        
+    
+        button[type="submit"]:hover {
+            background: linear-gradient(45deg, #0056b3, #003f7f);
+        }
+    
         #search-results {
+            display: grid;
             grid-gap: 20px;
-            width: 100%; /* Set width to 100% */
+            width: 100%;
         }
-        
+    
         .result {
             background-color: #fff;
             padding: 20px;
-            border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            word-wrap: break-word; /* Ensure long words break to the next line */
-            overflow-wrap: break-word; /* Ensure long words break to the next line */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
-        
+    
         .result h2 {
             margin: 0;
-            font-size: 18px;
+            font-size: 24px;
             color: #333;
-            word-wrap: break-word; /* Ensure long words break to the next line */
-            overflow-wrap: break-word; /* Ensure long words break to the next line */
         }
-        
+    
         .result a {
-            color: #4CAF50;
+            color: #007bff;
             text-decoration: none;
-            word-wrap: break-word; /* Ensure long URLs break to the next line */
-            overflow-wrap: break-word; /* Ensure long URLs break to the next line */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
-        
+    
+        .result a:hover {
+            text-decoration: underline;
+        }
+    
         .results {
             display: none;
         }
-        
+    
         .results.active {
             display: block;
         }
-
-        .hr {
-            border: 0;
-            height: 1px;
-            background: #333;
-            margin: 20px 0;
-        }
-        
+    
         .tabs {
             display: flex;
             margin-bottom: 10px;
             overflow-x: auto;
-            width: 100%; /* Set width to 100% */
+            width: 100%;
+            scrollbar-width: none;
+            justify-content: center; /* Center the tabs */
         }
+        
         .tab {
             padding: 10px;
             cursor: pointer;
-            border: 1px solid #ccc;
+            border: 1px solid #ced4da;
             margin-right: 5px;
             white-space: nowrap;
+            transition: background-color 0.3s;
+            border-radius: 25px;
         }
+        
         .tab.active {
-            background-color: #f0f0f0;
+            background-color: #0056b3; /* Highlight the active tab with blue color */
+            color: white; /* Optional: Change text color to white for better contrast */
             border-bottom: none;
         }
         
+        .tab:hover {
+            background-color: #0056b3;
+            color: white;
+        }
+    
         footer {
-            background-color: #333;
+            background-color: #0056b3;
             color: #fff;
-            padding: 20px;
+            padding: 30px;
             text-align: center;
             margin-top: auto;
-        }        
+            font-size: 18px;
+        }
     </style>
 </head>
 <body>
@@ -163,99 +182,140 @@
                     const searchForm = document.getElementById('search-form');
                     const searchInput = document.getElementById('search-input');
                     const searchResults = document.getElementById('search-results');
-                    
+                
                     // Create top tabs container
                     const topTabsContainer = document.createElement('div');
                     topTabsContainer.className = 'tabs';
                     searchResults.parentNode.insertBefore(topTabsContainer, searchResults);
-            
+                
                     // Create bottom tabs container
                     const bottomTabsContainer = document.createElement('div');
                     bottomTabsContainer.className = 'tabs';
+                    bottomTabsContainer.style.marginTop = '10px'; // Add margin-top
                     searchResults.parentNode.insertBefore(bottomTabsContainer, searchResults.nextSibling);
-            
+                
                     searchForm.addEventListener('submit', async (event) => {
                         event.preventDefault();
-            
+                
                         // Clear previous search results
                         searchResults.innerHTML = '';
                         topTabsContainer.innerHTML = '';
                         bottomTabsContainer.innerHTML = '';
-            
+                
                         try {
-                            // Search Wikipedia
-                            const wikipediaResponse = await fetch(`https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(searchInput.value)}&format=json&origin=*`);
+                            const query = encodeURIComponent(searchInput.value);
+                
+                            // Parallelize API requests
+                            const [
+                                wikipediaResponse,
+                                archiveResponse,
+                                gutenbergResponse,
+                                openLibraryResponse,
+                                harvardDataverseResponse,
+                                googleBooksResponse,
+                                crossrefResponse
+                            ] = await Promise.all([
+                                fetch(`https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${query}&format=json&origin=*`),
+                                fetch(`https://archive.org/advancedsearch.php?q=${query}&output=json`),
+                                fetch(`https://gutendex.com/books/?search=${query}`),
+                                fetch(`https://openlibrary.org/search.json?q=${query}`),
+                                fetch(`https://dataverse.harvard.edu/api/search?q=${query}`),
+                                fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}`),
+                                fetch(`https://api.crossref.org/works?query=${query}`)
+                            ]);
+                
+                            // Check all responses
                             if (!wikipediaResponse.ok) throw new Error('Wikipedia API request failed');
-                            const wikipediaData = await wikipediaResponse.json();
-                            console.log('Wikipedia Data:', wikipediaData);
-
-                            // Load more from Wikipedia
-                            const wikipediaResponse2 = await fetch(`https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(searchInput.value)}&format=json&origin=*`);
-                            if (!wikipediaResponse2.ok) throw new Error('Wikipedia API request failed');
-                            const wikipediaData2 = await wikipediaResponse2.json();
-                            console.log('Wikipedia Data:', wikipediaData2);
-            
-                            // Search Archive.org
-                            const archiveResponse = await fetch(`https://archive.org/advancedsearch.php?q=${encodeURIComponent(searchInput.value)}&output=json`);
                             if (!archiveResponse.ok) throw new Error('Archive.org API request failed');
-                            const archiveData = await archiveResponse.json();
-                            console.log('Archive.org Data:', archiveData);
-
-                            // Load more from Archive.org
-                            const archiveResponse2 = await fetch(`https://archive.org/advancedsearch.php?q=${encodeURIComponent(searchInput.value)}&output=json`);
-                            if (!archiveResponse2.ok) throw new Error('Archive.org API request failed');
-                            const archiveData2 = await archiveResponse2.json();
-                            console.log('Archive.org Data:', archiveData2);
-
-                            // Search for books on project gutenberg
-                            const gutenbergResponse = await fetch(`https://gutendex.com/books/?search=${encodeURIComponent(searchInput.value)}`);
                             if (!gutenbergResponse.ok) throw new Error('Project Gutenberg API request failed');
-                            const gutenbergData = await gutenbergResponse.json();
-                            console.log('Project Gutenberg Data:', gutenbergData);
+                            if (!openLibraryResponse.ok) throw new Error('Open Library API request failed');
+                            if (!harvardDataverseResponse.ok) throw new Error('Harvard Dataverse API request failed');
+                            if (!googleBooksResponse.ok) throw new Error('Google Books API request failed');
+                            if (!crossrefResponse.ok) throw new Error('Crossref API request failed');
 
-                            // Prioritize Wikipedia results
+                            // Parse all responses
+                            const [
+                                wikipediaData,
+                                archiveData,
+                                gutenbergData,
+                                openLibraryData,
+                                harvardDataverseData,
+                                googleBooksData,
+                                crossrefData
+                            ] = await Promise.all([
+                                wikipediaResponse.json(),
+                                archiveResponse.json(),
+                                gutenbergResponse.json(),
+                                openLibraryResponse.json(),
+                                harvardDataverseResponse.json(),
+                                googleBooksResponse.json(),
+                                crossrefResponse.json()
+                            ]);
+                
+                            // Process results
                             const wikipediaResults = wikipediaData.query.search.map(result => ({
-                                ...result,
-                                source: `https://en.wikipedia.org/wiki/${result.title}`,
-                                description: result.snippet
+                                title: result.title,
+                                description: result.snippet,
+                                source: `https://en.wikipedia.org/wiki/${result.title}`
                             }));
-
-                            const wikipediaResults2 = wikipediaData2.query.search.map(result => ({
-                                ...result,
-                                source: `https://en.wikipedia.org/wiki/${result.title}`,
-                                description: result.snippet
-                            }));
-
+                
                             const archiveResults = archiveData.response.docs.map(result => ({
                                 title: result.title || 'No Title',
                                 description: result.description || 'No Description',
-                                source: `https://archive.org/details/${result.identifier}`,
+                                source: `https://archive.org/details/${result.identifier}`
                             }));
-
-                            const archiveResults2 = archiveData2.response.docs.map(result => ({
-                                title: result.title || 'No Title',
-                                description: result.description || 'No Description',
-                                source: `https://archive.org/details/${result.identifier}`,
-                            }));
-
+                
                             const gutenbergResults = gutenbergData.results.map(result => ({
                                 title: result.title || 'No Title',
                                 description: result.formats[Object.keys(result.formats)[0]] || 'No Description',
-                                source: Object.values(result.formats)[0],
+                                source: Object.values(result.formats)[0]
                             }));
-            
-                            const allResults = [...wikipediaResults, ...wikipediaResults2, ...archiveResults, ...archiveResults2, ...gutenbergResults];
+                
+                            const openLibraryResults = openLibraryData.docs.map(result => ({
+                                title: result.title || 'No Title',
+                                description: result.first_sentence || 'No Description',
+                                source: `https://openlibrary.org${result.key}`
+                            }));
+                
+                            const harvardDataverseResults = harvardDataverseData.data.items.map(result => ({
+                                title: result.name || 'No Title',
+                                description: result.description || 'No Description',
+                                source: `https://dataverse.harvard.edu/dataset.xhtml?persistentId=${result.global_id}`
+                            }));
+
+                            const googleBooksResults = googleBooksData.items.map(result => ({
+                                title: result.volumeInfo.title || 'No Title',
+                                description: result.volumeInfo.description || 'No Description',
+                                source: result.volumeInfo.infoLink
+                            }));
+
+                            const crossrefResults = crossrefData.message.items.map(result => ({
+                                title: result.title[0] || 'No Title',
+                                description: result.abstract || 'No Description',
+                                source: result.URL
+                            }));
+                
+                            const allResults = [
+                                ...wikipediaResults,
+                                ...archiveResults,
+                                ...gutenbergResults,
+                                ...openLibraryResults,
+                                ...harvardDataverseResults,
+                                ...googleBooksResults,
+                                ...crossrefResults
+                            ];
+                
                             shuffleArray(allResults);
-            
-                            const resultsPerPage = 20;
+                
+                            const resultsPerPage = 50;
                             const pages = Math.ceil(allResults.length / resultsPerPage);
                             const maxTabs = 10; // Maximum number of tabs to display
-            
+                
                             for (let i = 1; i <= Math.min(pages, maxTabs); i++) {
                                 const createTab = (container) => {
                                     const tabElement = document.createElement('div');
                                     tabElement.className = 'tab';
-                                    tabElement.textContent = `Page ${i}`;
+                                    tabElement.textContent = `${i}`;
                                     tabElement.addEventListener('click', () => {
                                         document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
                                         document.querySelectorAll('.results').forEach(result => result.classList.remove('active'));
@@ -264,10 +324,10 @@
                                     });
                                     container.appendChild(tabElement);
                                 };
-            
+                
                                 createTab(topTabsContainer);
                                 createTab(bottomTabsContainer);
-            
+                
                                 const resultsPage = document.createElement('div');
                                 resultsPage.className = 'results';
                                 resultsPage.id = `results-page-${i}`;
@@ -290,7 +350,7 @@
                                 });
                                 searchResults.appendChild(resultsPage);
                             }
-            
+                
                             function shuffleArray(array) {
                                 for (let i = array.length - 1; i > 0; i--) {
                                     const j = Math.floor(Math.random() * (i + 1));
@@ -305,7 +365,7 @@
             </script>
         </main>
         <footer>
-            <p>&copy; 2024 André Machado. All rights reserved.</p>
+            <p>&copy; 2024 Wisdom Search Engine. All rights reserved.</p>
         </footer>
     </div>
 </body>
