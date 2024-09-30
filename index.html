@@ -100,7 +100,9 @@
             word-wrap: break-word;
             overflow-wrap: break-word;
             margin-bottom: 20px; /* Space between results */
-            width: 100%; /* Ensure result boxes fit the screen */
+            width: calc(100% - 40px); /* Ensure result boxes fit the screen with padding */
+            margin-left: auto;
+            margin-right: auto;
         }
     
         .result h2 {
@@ -126,11 +128,6 @@
     
         .results.active {
             display: block;
-        }
-    
-        .result img {
-            width: 100px; /* Set width to 100px */
-            height: auto;
         }
     
         .tabs {
@@ -319,7 +316,7 @@
                                 fetch(`https://dataverse.harvard.edu/api/search?q=${query}`),
                                 fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}`),
                                 fetch(`https://api.crossref.org/works?query=${query}`),
-                                fetch(`https://sepiasearch.org/api/v1/search/videos?search=${query}&searchTarget=search-index&resultType=videos&nsfw=false&count=50&start=0`),
+                                fetch(`https://sepiasearch.org/api/v1/search/videos?search=${query}&searchTarget=search-index&resultType=videos&nsfw=false&count=100&start=0`),
                                 fetch(`https://commons.wikimedia.org/w/api.php?action=query&list=search&srsearch=${query}&srnamespace=6&format=json&origin=*`)
                             ]);
             
@@ -464,7 +461,7 @@
                                     resultElement.className = 'result';
                                     resultElement.innerHTML = `
                                         <h2>${result.title}</h2>
-                                        ${result.thumbnail ? `<img src="${result.thumbnail}" alt="Thumbnail" style="width:100%; height:auto;">` : ''}
+                                        ${result.thumbnail ? `<img src="${result.thumbnail}" alt="Thumbnail" style="width:100%; height:auto; max-width:350px;">` : ''}
                                         ${result.date ? `<p><em>Date: ${result.date}</em></p>` : ''}
                                         <p>${result.description}</p>
                                         <p>Source: <a href="${result.source}" target="_blank">${result.source}</a></p>
